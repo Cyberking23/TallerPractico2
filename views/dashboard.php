@@ -1,3 +1,16 @@
+<?php
+session_start();  // Inicia la sesión para acceder a las variables de sesión
+
+if (isset($_SESSION['user_id']) && isset($_SESSION['user_name'])) {
+    // Si la sesión está activa, muestra el nombre del usuario
+    $bienvenida =  "Bienvenido, " . $_SESSION['user_name'] ;
+} else {
+    // Si la sesión no está activa, redirigir al login o mostrar un mensaje
+    echo "No has iniciado sesión. Redirigiendo al login...";
+    header("refresh:3;url=/views/auth/login.html"); // Redirige después de 3 segundos
+    exit;
+}
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -86,40 +99,25 @@
     
     <div class="main-content">
         <h1 style="color: var(--uber-green);">Mis Proyectos de Tesis</h1>
+        <p><?php echo $bienvenida; ?>!</p>
+        
         
         <div class="card-project">
             <h3>Inteligencia Artificial en Educación</h3>
             <p>Análisis de aplicaciones de IA en entornos educativos virtuales</p>
             
-            <div class="progress-bar">
-                <div class="progress"></div>
-            </div>
             
             <div style="display: flex; justify-content: space-between; align-items: center;">
                 <span>Etapa: Corrección de observaciones</span>
                 <div>
-                    <a href="edit.php" class="btn-uber" style="margin-right: 10px;"><i class="fas fa-edit"></i> Editar</a>
-                    <a href="details.php" class="btn-uber"><i class="fas fa-eye"></i> Detalles</a>
+                    <a href="details.php" class="btn-uber" style="margin-right: 10px;"><i class="fas fa-edit"></i> Editar</a>
+                    <a href="details.php" class="btn-uber"><i class="fas fa-trash"></i> Eliminar</a>
+
                 </div>
             </div>
         </div>
         
-        <div class="card-project">
-            <h3>Machine Learning para Diagnóstico Médico</h3>
-            <p>Desarrollo de algoritmos para diagnóstico temprano de enfermedades</p>
-            
-            <div class="progress-bar">
-                <div class="progress" style="width: 30%;"></div>
-            </div>
-            
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-                <span>Etapa: Presentación de tesis</span>
-                <div>
-                    <a href="edit.php" class="btn-uber" style="margin-right: 10px;"><i class="fas fa-edit"></i> Editar</a>
-                    <a href="details.php" class="btn-uber"><i class="fas fa-eye"></i> Detalles</a>
-                </div>
-            </div>
-        </div>
+       
     </div>
 </body>
 </html>

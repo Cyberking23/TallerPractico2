@@ -86,22 +86,20 @@ class Users {
             $stmt->bindParam(':email', $this->email);
             $stmt->execute();
             $user = $stmt->fetch(PDO::FETCH_ASSOC);
-
+    
             // Si ya existe, retornar un error
             if ($user) {
                 return "El correo electrónico ya está registrado.";
             }
-
+    
             // Si no existe, insertar el nuevo usuario
             $query = "INSERT INTO usuarios (nombre, email, password, rol_id) VALUES (:nombre, :email, :password, :rol_id)";
             $stmt = $this->db->prepare($query);
             $stmt->bindParam(':nombre', $this->nombre);
             $stmt->bindParam(':email', $this->email);
-            // Encriptar la contraseña antes de guardarla
-            $passwordHash = password_hash($this->password, PASSWORD_DEFAULT);
-            $stmt->bindParam(':password', $passwordHash);
+            $stmt->bindParam(':password', $this->password); // Guardamos la contraseña en texto plano
             $stmt->bindParam(':rol_id', $this->rol_id); // Asignar el rol al usuario
-
+    
             // Ejecutar la consulta
             if ($stmt->execute()) {
                 return "Usuario registrado con éxito.";
@@ -112,6 +110,7 @@ class Users {
             die("Error de conexión: " . $e->getMessage());
         }
     }
+    
 }
 
 ?>

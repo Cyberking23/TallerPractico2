@@ -248,19 +248,7 @@
                     </div>
                 </div>
                 
-                <div style="flex: 1;">
-                    <h4 style="margin-bottom: 15px;">Colaboradores</h4>
-                    <div style="display: flex; align-items: center; margin-bottom: 10px;">
-                        <div style="width: 40px; height: 40px; background-color: #333; border-radius: 50%; 
-                                    display: flex; align-items: center; justify-content: center; margin-right: 15px;">
-                            <i class="fas fa-user"></i>
-                        </div>
-                        <div>
-                            <div>María Gómez</div>
-                            <small style="color: #aaa;">maria.gomez@email.com</small>
-                        </div>
-                    </div>
-                </div>
+            
             </div>
         </div>
         

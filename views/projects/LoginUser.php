@@ -27,7 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $result = $user->Login();
 
     if ($result) {
-        header("Location: dashboard.php"); 
+        header("Location: ../dashboard.php"); 
         exit;
     } else {
         echo "Credenciales incorrectas.Redirigiendo.......";
@@ -35,3 +35,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 ?>
+

@@ -23,7 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Asignar los valores a los atributos del objeto
     $user->nombre = $name;
     $user->email = $email;
-    $user->password = password_hash($password, PASSWORD_DEFAULT);  // Encriptar la contraseña
+    $user->password = $password;  // Almacenamos la contraseña en texto plano (sin hash)
     $user->rol_id = $rol_id;  // Asignar el rol_id al objeto User
 
     // Llamar al método de registro en la clase Users
