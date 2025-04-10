@@ -31,7 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit;
     } else {
         echo "Credenciales incorrectas.Redirigiendo.......";
-        header("refresh:3;url=/views/auth/dashboard.php"); 
+        header("refresh:3;url=/views/dashboard.php"); 
     }
 }
 ?>

@@ -35,6 +35,8 @@ class Project {
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
+  
+
     public function update($id, $titulo, $descripcion, $etapa, $colaboradores) {
         $query = "UPDATE tesis SET titulo = :titulo, Descripcion = :descripcion, etapa = :etapa, colaboradores = :colaboradores 
                   WHERE id = :id";

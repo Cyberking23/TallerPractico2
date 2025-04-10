@@ -1,34 +1,10 @@
-<?php
-session_start();  // Inicia la sesión para acceder a las variables de sesión
-
-if (isset($_SESSION['user_id']) && isset($_SESSION['user_name'])) {
-    // Si la sesión está activa, muestra el nombre del usuario
-    $bienvenida =  "Bienvenido, " . $_SESSION['user_name'];
-} else {
-    // Si la sesión no está activa, redirigir al login o mostrar un mensaje
-    echo "No has iniciado sesión. Redirigiendo al login...";
-    header("refresh:3;url=/views/auth/login.html"); // Redirige después de 3 segundos
-    exit;
-}
-
-// Conectar a la base de datos y obtener los proyectos
-include '../config/Conexion.php';
-require_once '../models/Project.php';
-
-$conexion = new Conexion();  // Crear una instancia de la clase Conexion
-$project = new Project($conexion);  // Crear una instancia de la clase Project
-
-// Obtener todos los proyectos
-$projects = $project->getAll();
-?>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mis Proyectos - Sistema de Tesis</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Listado de Proyectos</title>
     <style>
         :root {
             --uber-black: #000000;
@@ -58,7 +34,19 @@ $projects = $project->getAll();
             margin-left: 300px;
             padding: 30px;
         }
-        
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #333;
+        }
+
+        .header h1 {
+            margin: 0;
+        }
+
         .card-project {
             background-color: var(--uber-gray);
             border-radius: 12px;
@@ -67,26 +55,37 @@ $projects = $project->getAll();
             border: 1px solid #333;
             transition: all 0.3s;
         }
-        
+
         .card-project:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 20px rgba(0,0,0,0.2);
         }
-        
+
+        .project-title {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        .project-author {
+            padding-bottom:10px;
+            font-size: 1.1rem;
+            color: var(--uber-light);
+        }
+
         .progress-bar {
             height: 6px;
             background-color: #333;
             border-radius: 3px;
             margin: 15px 0;
         }
-        
+
         .progress {
             height: 100%;
             background-color: var(--uber-green);
             border-radius: 3px;
             width: 65%;
         }
-        
+
         .btn-uber {
             background-color: var(--uber-green);
             color: var(--uber-black);
@@ -135,7 +134,8 @@ $projects = $project->getAll();
     </style>
 </head>
 <body>
-    <div class="sidebar">
+
+<div class="sidebar">
         <h3 style="color: var(--uber-green);">Menú</h3>
         <ul style="list-style: none; padding: 0;">
             <li style="padding: 10px 0;"><a href="#" style="color: white; text-decoration: none;"><i class="fas fa-home"></i> Dashboard</a></li>
@@ -143,40 +143,23 @@ $projects = $project->getAll();
             <li style="padding: 10px 0;"><a href="../auth/logout.php" style="color: white; text-decoration: none;"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a></li>
         </ul>
     </div>
-    
+
     <div class="main-content">
-        <h1 style="color: var(--uber-green);">Mis Proyectos de Tesis</h1>
-        <p><?php echo $bienvenida; ?>!</p>
+        <div class="header">
+            <h1>Listado de Proyectos</h1>
+            <button class="btn-uber">Agregar Proyecto</button>
+        </div>
 
-        <?php foreach ($projects as $project): ?>
-            <div class="card-project">
-                <h3><?php echo htmlspecialchars($project['titulo']); ?></h3>
-                <p><?php echo htmlspecialchars($project['descripcion']); ?></p>
-                
-                <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <span>Etapa: 
-                        <span class="stage-indicator"><?php echo htmlspecialchars($project['etapa']); ?></span>
-                    </span>
+        <div class="card-project">
+            <div class="project-title">Proyecto 1: Sistema de Gestión</div>
+            <div class="project-author">Autores: Juan Pérez, Ana García</div>
+            <a href="Fases.php"><button class="btn-uber">Ver Detalles</button></a>
+        </div>
 
-                    <div>
-                        <a href="./details.php?id=<?php echo $project['id']; ?>" class="btn-uber" style="margin-right: 10px;"><i class="fas fa-edit"></i> Editar</a>
-                        <a href="./projects/delete.php?id=<?php echo $project['id']; ?>" class="btn-uber"><i class="fas fa-trash"></i> Eliminar</a>
-                    </div>
-                </div>
 
-                <h4>Archivos Subidos</h4>
-                <div class="file-card">
-                    <div class="file-info">
-                        <div class="file-icon"><i class="fas fa-file-pdf"></i></div>
-                        <div>
-                            <div>Propuesta_Tesis_IA.pdf</div>
-                            <small style="color: #aaa;">Subido el 15/05/2023 - 2.4 MB</small>
-                        </div>
-                    </div>
-                    
-                </div>
-            </div>
-        <?php endforeach; ?>
+
+      
     </div>
+
 </body>
 </html>

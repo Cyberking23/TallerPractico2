@@ -34,6 +34,17 @@ class File {
         return true;
     }
 
+
+    public function getFiles($projectId) {
+        $sql = "SELECT * FROM files WHERE project_id = :project_id";
+        $stmt = $this->conexion->getConnection()->prepare($sql);
+        $stmt->bindParam(':project_id', $projectId, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+
+
     // Mueve el archivo a la carpeta de destino
     public function moveFile() {
         if (!$this->isValid()) {
