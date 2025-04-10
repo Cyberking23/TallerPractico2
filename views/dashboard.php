@@ -152,7 +152,7 @@ $projects = $project->getAll();
         <?php foreach ($projects as $project): ?>
             <div class="card-project">
                 <h3><?php echo htmlspecialchars($project['titulo']); ?></h3>
-                <p><?php echo htmlspecialchars($project['Descripcion']); ?></p>
+                <p><?php echo htmlspecialchars($project['descripcion']); ?></p>
                 
                 <div style="display: flex; justify-content: space-between; align-items: center;">
                     <span>Etapa: 
