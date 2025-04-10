@@ -158,15 +158,23 @@
             </div>
 
             <!-- Nuevo apartado para subir archivos -->
-            
+            <div class="form-group">
+                <label>Subir Archivo (opcional)</label>
+                <div class="file-input-wrapper">
+                    <input type="file" name="archivo" class="file-input" id="archivo">
+                    <label for="archivo" class="file-input-label">Seleccionar archivo</label>
+                </div>
+                <!-- Información sobre el archivo seleccionado, mostrada solo si se ha subido un archivo -->
+                <div class="file-info">
+                    <!-- El nombre del archivo seleccionado será mostrado por el navegador automáticamente una vez se haya cargado -->
+                </div>
+            </div>
 
             <div class="btn-container">
                 <a href="dashboard.php" class="btn-uber btn-cancelar">Cancelar</a>
                 <button type="submit" class="btn-uber"><i class="fas fa-save"></i> Guardar Proyecto</button>
             </div>
         </form>
-
-
         </div>
     </div>
 </body>

@@ -3,7 +3,7 @@ session_start();  // Inicia la sesión para acceder a las variables de sesión
 
 if (isset($_SESSION['user_id']) && isset($_SESSION['user_name'])) {
     // Si la sesión está activa, muestra el nombre del usuario
-    $bienvenida =  "Bienvenido, " . $_SESSION['user_name'] ;
+    $bienvenida =  "Bienvenido, " . $_SESSION['user_name'];
 } else {
     // Si la sesión no está activa, redirigir al login o mostrar un mensaje
     echo "No has iniciado sesión. Redirigiendo al login...";
@@ -19,7 +19,7 @@ $conexion = new Conexion();  // Crear una instancia de la clase Conexion
 $project = new Project($conexion);  // Crear una instancia de la clase Project
 
 // Obtener todos los proyectos
-$projects = $project->getAll();  
+$projects = $project->getAll();
 ?>
 
 <!DOCTYPE html>
@@ -96,6 +96,42 @@ $projects = $project->getAll();
             font-weight: bold;
             cursor: pointer;
         }
+
+        .file-card {
+            background-color: var(--uber-gray);
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            margin-top: 10px;
+        }
+
+        .file-info {
+            display: flex;
+            align-items: center;
+        }
+
+        .file-icon {
+            margin-right: 10px;
+            font-size: 20px;
+        }
+
+        .file-actions a {
+            margin-left: 10px;
+            color: var(--uber-black);
+            background-color: var(--uber-green);
+            padding: 8px 12px;
+            border-radius: 6px;
+            text-decoration: none;
+        }
+
+        .stage-indicator {
+            background-color: var(--uber-green);
+            color: var(--uber-dark);
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
     </style>
 </head>
 <body>
@@ -113,18 +149,32 @@ $projects = $project->getAll();
         <h1 style="color: var(--uber-green);">Mis Proyectos de Tesis</h1>
         <p><?php echo $bienvenida; ?>!</p>
 
-    
         <?php foreach ($projects as $project): ?>
             <div class="card-project">
                 <h3><?php echo htmlspecialchars($project['titulo']); ?></h3>
                 <p><?php echo htmlspecialchars($project['Descripcion']); ?></p>
                 
                 <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <span>Etapa: <?php echo htmlspecialchars($project['etapa']); ?></span>
+                    <span>Etapa: 
+                        <span class="stage-indicator"><?php echo htmlspecialchars($project['etapa']); ?></span>
+                    </span>
+
                     <div>
-                        <a href="details.php?id=<?php echo $project['id']; ?>" class="btn-uber" style="margin-right: 10px;"><i class="fas fa-edit"></i> Editar</a>
+                        <a href="./projects/details.php?id=<?php echo $project['id']; ?>" class="btn-uber" style="margin-right: 10px;"><i class="fas fa-edit"></i> Editar</a>
                         <a href="./projects/delete.php?id=<?php echo $project['id']; ?>" class="btn-uber"><i class="fas fa-trash"></i> Eliminar</a>
                     </div>
+                </div>
+
+                <h4>Archivos Subidos</h4>
+                <div class="file-card">
+                    <div class="file-info">
+                        <div class="file-icon"><i class="fas fa-file-pdf"></i></div>
+                        <div>
+                            <div>Propuesta_Tesis_IA.pdf</div>
+                            <small style="color: #aaa;">Subido el 15/05/2023 - 2.4 MB</small>
+                        </div>
+                    </div>
+                    
                 </div>
             </div>
         <?php endforeach; ?>
