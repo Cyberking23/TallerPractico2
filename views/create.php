@@ -130,47 +130,49 @@
     <div class="main-content">
         <h1>Nuevo Proyecto de Tesis</h1>
         <div class="form-container">
-            <form method="POST" enctype="multipart/form-data"> 
-                <div class="form-group">
-                    <label>Título del Proyecto</label>
-                    <input type="text" class="form-control" name="titulo" required>
-                </div>
+        <form method="POST" action="projects/RegisterProyect.php" enctype="multipart/form-data">
+            <div class="form-group">
+                <label>Título del Proyecto</label>
+                <input type="text" class="form-control" name="titulo" required>
+            </div>
 
-                <div class="form-group">
-                    <label>Descripción</label>
-                    <textarea class="form-control" name="descripcion" required></textarea>
-                </div>
+            <div class="form-group">
+                <label>Descripción</label>
+                <textarea class="form-control" name="descripcion" required></textarea>
+            </div>
 
-                <div class="form-group">
-                    <label>Etapa Inicial</label>
-                    <select class="form-control" name="etapa">
-                        <option>Propuesta de tema</option>
-                        <option>Presentación de tesis</option>
-                        <option>Corrección de observaciones</option>
-                        <option>Tesis aprobada</option>
-                    </select>
-                </div>
+            <div class="form-group">
+                <label>Etapa Inicial</label>
+                <select class="form-control" name="etapa" required>
+                    <option value="1">Propuesta de tema</option>
+                    <option value="2">Revisión</option>
+                    <option value="3">Corrección de observaciones</option>
+                    <option value="4">Tesis aprobada</option>
+                    <option value="5">Presentación final</option>
+                </select>
+            </div>
 
-                <div class="form-group">
-                    <label>Colaboradores (opcional)</label>
-                    <input type="text" class="form-control" name="colaboradores" placeholder="Buscar estudiantes...">
-                </div>
+            <div class="form-group">
+                <label>Colaboradores (opcional)</label>
+                <input type="text" class="form-control" name="colaboradores" placeholder="Buscar estudiantes...">
+            </div>
 
-                <!-- Nuevo apartado para subir archivos -->
-                <div class="form-group">
-                    <label>Subir Archivos (PDF, Word, MP4, AVI, Imágenes)</label>
-                    <div class="file-input-wrapper">
-                        <input type="file" name="archivo" class="file-input" accept=".pdf,.docx,.mp4,.avi,image/*" required>
-                        <label for="archivo" class="file-input-label">Seleccionar archivo...</label>
-                    </div>
+            <!-- Nuevo apartado para subir archivos -->
+            <div class="form-group">
+                <label>Subir Archivos (PDF, Word, MP4, AVI, Imágenes)</label>
+                <div class="file-input-wrapper">
+                    <input type="file" name="archivo" class="file-input" accept=".pdf,.docx,.mp4,.avi,image/*" required>
+                    <label for="archivo" class="file-input-label">Seleccionar archivo...</label>
                 </div>
+            </div>
+
+            <div class="btn-container">
+                <a href="dashboard.php" class="btn-uber btn-cancelar">Cancelar</a>
+                <button type="submit" class="btn-uber"><i class="fas fa-save"></i> Guardar Proyecto</button>
+            </div>
+        </form>
 
 
-                <div class="btn-container">
-                    <a href="dashboard.php" class="btn-uber btn-cancelar">Cancelar</a>
-                    <button type="submit" class="btn-uber"><i class="fas fa-save"></i> Guardar Proyecto</button>
-                </div>
-            </form>
         </div>
     </div>
 </body>
