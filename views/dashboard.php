@@ -113,9 +113,7 @@ $projects = $project->getAll();
         <h1 style="color: var(--uber-green);">Mis Proyectos de Tesis</h1>
         <p><?php echo $bienvenida; ?>!</p>
 
-        <!-- Mostrar los proyectos en un select -->
-       
-
+    
         <?php foreach ($projects as $project): ?>
             <div class="card-project">
                 <h3><?php echo htmlspecialchars($project['titulo']); ?></h3>
@@ -125,7 +123,7 @@ $projects = $project->getAll();
                     <span>Etapa: <?php echo htmlspecialchars($project['etapa']); ?></span>
                     <div>
                         <a href="details.php?id=<?php echo $project['id']; ?>" class="btn-uber" style="margin-right: 10px;"><i class="fas fa-edit"></i> Editar</a>
-                        <a href="delete.php?id=<?php echo $project['id']; ?>" class="btn-uber"><i class="fas fa-trash"></i> Eliminar</a>
+                        <a href="./projects/delete.php?id=<?php echo $project['id']; ?>" class="btn-uber"><i class="fas fa-trash"></i> Eliminar</a>
                     </div>
                 </div>
             </div>
