@@ -158,13 +158,7 @@
             </div>
 
             <!-- Nuevo apartado para subir archivos -->
-            <div class="form-group">
-                <label>Subir Archivos (PDF, Word, MP4, AVI, Imágenes)</label>
-                <div class="file-input-wrapper">
-                    <input type="file" name="archivo" class="file-input" accept=".pdf,.docx,.mp4,.avi,image/*" required>
-                    <label for="archivo" class="file-input-label">Seleccionar archivo...</label>
-                </div>
-            </div>
+            
 
             <div class="btn-container">
                 <a href="dashboard.php" class="btn-uber btn-cancelar">Cancelar</a>
