@@ -21,11 +21,12 @@ class Project {
 
     // Métodos para obtener, actualizar, y eliminar proyectos
     public function getAll() {
-        $query = "SELECT * FROM tesis";
+        $query = "SELECT * FROM tesis"; // Asegúrate de que la tabla 'tesis' existe
         $stmt = $this->db->getConnection()->prepare($query);
         $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);  // Devuelve todos los proyectos como un array asociativo
     }
+    
 
     public function getById($id) {
         $query = "SELECT * FROM tesis WHERE id = :id";
