@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dashboard Evaluador - Sistema de Tesis</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+
+  <style>
+    :root {
+      --uber-black: #000;
+      --uber-dark: #121212;
+      --uber-green: #00ff5f;
+      --uber-gray: #1e1e1e;
+      --uber-light: #e6e6e6;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: var(--uber-black);
+      color: white;
+    }
+
+    .sidebar {
+      width: 250px;
+      background-color: var(--uber-dark);
+      height: 100vh;
+      position: fixed;
+      padding: 20px;
+      border-right: 1px solid #333;
+    }
+
+    .sidebar h3 {
+      color: var(--uber-green);
+      margin-bottom: 30px;
+    }
+
+    .sidebar ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .sidebar ul li {
+      padding: 12px 0;
+    }
+
+    .sidebar ul li a {
+      color: white;
+      text-decoration: none;
+      font-size: 16px;
+    }
+
+    .sidebar ul li a:hover {
+      color: var(--uber-green);
+    }
+
+    .main-content {
+      margin-left: 270px;
+      padding: 30px;
+    }
+
+    h1 {
+      color: var(--uber-green);
+      margin-bottom: 25px;
+    }
+
+    .table-container {
+      background-color: var(--uber-gray);
+      border-radius: 12px;
+      padding: 30px;
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+    }
+
+    th, td {
+      padding: 15px;
+      text-align: left;
+      border-bottom: 1px solid #444;
+    }
+
+    th {
+      color: var(--uber-green);
+    }
+
+    tr:hover {
+      background-color: #2a2a2a;
+    }
+
+    .btn {
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-weight: bold;
+      border: none;
+      text-decoration: none;
+      color: white;
+      font-size: 14px;
+      margin-right: 5px;
+    }
+
+    .btn-view {
+      background-color: #555;
+    }
+
+    .btn-evaluate {
+      background-color: var(--uber-green);
+      color: black;
+    }
+
+    .btn-evaluate:hover {
+      background-color: #00cc4a;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="sidebar">
+    <h3>Menú</h3>
+    <ul>
+      <li><a href="#"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+      <li><a href="../auth/logout.php"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a></li>
+    </ul>
+  </div>
+
+  <div class="main-content">
+    <h1>Proyectos de Tesis Asignados</h1>
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Título</th>
+            <th>Autores</th>
+            <th>Etapa</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Aquí se pueden cargar dinámicamente los proyectos desde la base de datos -->
+          <tr>
+            <td>1</td>
+            <td>Sistema de Gestión de Tesis</td>
+            <td>Carlos Merino, José Martínez</td>
+            <td>Presentación</td>
+            <td>
+              <a href="ver_tesis.php?id=1" class="btn btn-view"><i class="fas fa-eye"></i></a>
+              <a href="evaluar_tesis.php?id=1" class="btn btn-evaluate"><i class="fas fa-star"></i> Evaluar</a>
+            </td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>Plataforma de Tutorías Académicas</td>
+            <td>María López</td>
+            <td>Propuesta</td>
+            <td>
+              <a href="ver_tesis.php?id=2" class="btn btn-view"><i class="fas fa-eye"></i></a>
+              <a href="evaluar_tesis.php?id=2" class="btn btn-evaluate"><i class="fas fa-star"></i> Evaluar</a>
+            </td>
+          </tr>
+          <!-- Agrega más registros dinámicamente -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</body>
+</html>

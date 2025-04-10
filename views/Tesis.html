@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dashboard de Tesis</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <style>
+    :root {
+      --uber-black: #000000;
+      --uber-dark: #121212;
+      --uber-green: #00ff5f;
+      --uber-gray: #1e1e1e;
+      --uber-light: #e6e6e6;
+    }
+
+    body {
+      background-color: var(--uber-black);
+      font-family: 'Segoe UI', sans-serif;
+      color: white;
+      margin: 0;
+    }
+
+    .sidebar {
+      width: 250px;
+      background-color: var(--uber-dark);
+      height: 100vh;
+      position: fixed;
+      padding: 20px;
+      border-right: 1px solid #333;
+    }
+
+    .main-content {
+      margin-left: 270px;
+      padding: 30px;
+    }
+
+    .card-project {
+      background-color: var(--uber-gray);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 20px;
+      border: 1px solid #333;
+      transition: all 0.3s;
+    }
+
+    .card-project:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    }
+
+    .progress-bar {
+      height: 6px;
+      background-color: #333;
+      border-radius: 3px;
+      margin: 15px 0;
+    }
+
+    .progress {
+      height: 100%;
+      background-color: var(--uber-green);
+      border-radius: 3px;
+    }
+
+    .btn-uber {
+      background-color: var(--uber-green);
+      color: var(--uber-black);
+      border: none;
+      padding: 10px 15px;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .sidebar h3 {
+      color: var(--uber-green);
+    }
+
+    .sidebar ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .sidebar li {
+      padding: 10px 0;
+    }
+
+    .sidebar a {
+      color: white;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .tesis-view {
+      background-color: var(--uber-gray);
+      border-radius: 12px;
+      padding: 20px;
+      border: 1px solid #333;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="sidebar">
+    <h3>Menú</h3>
+    <ul>
+      <li><a href="#"><i class="fas fa-home"></i> Dashboard</a></li>
+      <li><a href="../auth/logout.php"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a></li>
+    </ul>
+  </div>
+
+  <div class="main-content">
+    <h1 style="color: var(--uber-green);">Panel de Tesis</h1>
+
+    <!-- Proyecto 1 -->
+    <div class="card-project">
+      <h3>Inteligencia Artificial en Educación</h3>
+      <p>Análisis de aplicaciones de IA en entornos educativos virtuales</p>
+
+      <div class="progress-bar">
+        <div class="progress" style="width: 65%;"></div>
+      </div>
+
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <span>Etapa: Corrección de observaciones</span>
+        <div>
+          <a href="edit.php" class="btn-uber"><i class="fas fa-edit"></i> Editar</a>
+          <a href="#ver-tesis-1" class="btn-uber"><i class="fas fa-eye"></i> Ver Tesis</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Proyecto 2 -->
+    <div class="card-project">
+      <h3>Machine Learning para Diagnóstico Médico</h3>
+      <p>Desarrollo de algoritmos para diagnóstico temprano de enfermedades</p>
+
+      <div class="progress-bar">
+        <div class="progress" style="width: 30%;"></div>
+      </div>
+
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <span>Etapa: Presentación de tesis</span>
+        <div>
+          <a href="edit.php" class="btn-uber"><i class="fas fa-edit"></i> Editar</a>
+          <a href="#ver-tesis-2" class="btn-uber"><i class="fas fa-eye"></i> Ver Tesis</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Vista de Tesis Detallada (puedes duplicar esta sección por cada tesis) -->
+    <div id="ver-tesis-1" class="tesis-view">
+      <h2>Inteligencia Artificial en Educación</h2>
+      <p><strong>Resumen:</strong> Esta tesis analiza cómo las tecnologías basadas en inteligencia artificial pueden ser implementadas para mejorar la educación virtual, adaptando los contenidos al ritmo de aprendizaje de cada estudiante.</p>
+      <p><strong>Autores:</strong> Carlos Merino, Ana Pérez</p>
+      <p><strong>Director:</strong> Dr. Julio López</p>
+      <p><strong>Fecha:</strong> 2025</p>
+    </div>
+
+    <div id="ver-tesis-2" class="tesis-view">
+      <h2>Machine Learning para Diagnóstico Médico</h2>
+      <p><strong>Resumen:</strong> En esta investigación se desarrollan algoritmos de aprendizaje automático que permiten predecir enfermedades con base en síntomas y datos clínicos, facilitando diagnósticos más tempranos.</p>
+      <p><strong>Autores:</strong> Carlos Merino, Luis Gómez</p>
+      <p><strong>Director:</strong> Dra. Elena Torres</p>
+      <p><strong>Fecha:</strong> 2025</p>
+    </div>
+
+  </div>
+</body>
+</html>

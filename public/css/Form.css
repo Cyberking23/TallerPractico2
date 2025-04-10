@@ -1,0 +1,111 @@
+:root {
+    --uber-black: #000000;
+    --uber-dark: #121212;
+    --uber-green: #00ff5f;
+    --uber-gray: #1e1e1e;
+    --uber-text: #ffffff;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--uber-black);
+    font-family: 'Ubuntu', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    color: var(--uber-text);
+    padding: 20px;
+}
+
+.login-container {
+    width: 100%;
+    max-width: 420px;
+    padding: 50px 40px;
+    background-color: var(--uber-dark);
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    border: 1px solid #333;
+}
+
+.logo {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.logo h1 {
+    color: var(--uber-green);
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+}
+
+.form-group {
+    margin-bottom: 30px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: 500;
+    font-size: 14px;
+}
+
+.form-control {
+    width: 100%;
+    padding: 15px 18px;
+    background-color: var(--uber-gray);
+    border: 1px solid #333;
+    border-radius: 8px;
+    color: var(--uber-text);
+    font-size: 15px;
+    transition: all 0.3s;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: var(--uber-green);
+    box-shadow: 0 0 0 3px rgba(0, 255, 95, 0.1);
+}
+
+.btn-uber {
+    width: 100%;
+    background-color: var(--uber-green);
+    color: var(--uber-black);
+    border: none;
+    padding: 16px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-top: 5px;
+}
+
+.btn-uber:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 255, 95, 0.2);
+}
+
+.footer-text {
+    text-align: center;
+    margin-top: 30px;
+    font-size: 14px;
+    color: #888;
+}
+
+.footer-text a {
+    color: var(--uber-green);
+    text-decoration: none;
+    font-weight: 500;
+    transition: opacity 0.3s;
+}
+
+.footer-text a:hover {
+    opacity: 0.8;
+}

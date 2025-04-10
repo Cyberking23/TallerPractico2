@@ -3,9 +3,9 @@
 class Conexion {
     private $host = 'localhost';
     private $db_user = 'root';
-    private $db_pass = '';
+    private $db_pass = 'root';
     private $db_port = '3306';
-    private $db_name = 'tu_base_de_datos';
+    private $db_name = 'sistema_tesis';
     private $pdo;
 
     public function __construct() {
