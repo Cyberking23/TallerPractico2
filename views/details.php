@@ -1,3 +1,26 @@
+<?php
+session_start();  
+
+if (isset($_SESSION['user_id']) && isset($_SESSION['user_name'])) {
+    $bienvenida =  "Bienvenido, " . $_SESSION['user_name'];
+} else {
+    echo "No has iniciado sesión. Redirigiendo al login...";
+    header("refresh:3;url=/views/auth/login.html"); 
+    exit;
+}
+
+// Conectar a la base de datos y obtener los proyectos
+include '../config/Conexion.php';
+require_once '../models/Project.php';
+
+$conexion = new Conexion();  // Crear una instancia de la clase Conexion
+$project = new Project($conexion);  // Crear una instancia de la clase Project
+
+// Obtener el ID del proyecto a editar
+$project_id = $_GET['id']; // Obtener el ID desde la URL
+$project_details = $project->getById($project_id); // Método que obtiene los detalles del proyecto por su ID
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -20,7 +43,7 @@
         }
 
         h1 {
-            color: var(--uber-green, #29d882);
+            color: #29d882;
             margin-bottom: 30px;
         }
 
@@ -124,49 +147,48 @@
             color: white;
         }
     </style>
-
 </head>
 <body>
     <div class="main-content">
         <h1>Editar Proyecto de Tesis</h1>
+        <p><?php echo $bienvenida; ?>!</p>
+
         <div class="form-container">
-            <form method="POST" action="projects/UpdateProject.php?id=" enctype="multipart/form-data">
+            <form method="POST" action="projects/UpdateProject.php?id=<?php echo $project_details['id']; ?>" enctype="multipart/form-data">
                 <div class="form-group">
                     <label>Título del Proyecto</label>
-                    <input type="text" class="form-control" name="titulo" value="" required>
+                    <input type="text" class="form-control" name="titulo" value="<?php echo htmlspecialchars($project_details['titulo']); ?>" required>
                 </div>
 
                 <div class="form-group">
                     <label>Descripción</label>
-                    <textarea class="form-control" name="descripcion" required></textarea>
+                    <textarea class="form-control" name="descripcion" required><?php echo htmlspecialchars($project_details['Descripcion']); ?></textarea>
                 </div>
 
                 <div class="form-group">
                     <label>Etapa Inicial</label>
                     <select class="form-control" name="etapa" required>
-                        <option value="1">Propuesta de tema</option>
-                        <option value="2">Revisión</option>
-                        <option value="3">Corrección de observaciones</option>
-                        <option value="4">Tesis aprobada</option>
-                        <option value="5">Presentación final</option>
+                        <option value="1" <?php echo ($project_details['etapa'] == '1') ? 'selected' : ''; ?>>Propuesta de tema</option>
+                        <option value="2" <?php echo ($project_details['etapa'] == '2') ? 'selected' : ''; ?>>Revisión</option>
+                        <option value="3" <?php echo ($project_details['etapa'] == '3') ? 'selected' : ''; ?>>Corrección de observaciones</option>
+                        <option value="4" <?php echo ($project_details['etapa'] == '4') ? 'selected' : ''; ?>>Tesis aprobada</option>
+                        <option value="5" <?php echo ($project_details['etapa'] == '5') ? 'selected' : ''; ?>>Presentación final</option>
                     </select>
                 </div>
 
                 <div class="form-group">
                     <label>Colaboradores (opcional)</label>
-                    <input type="text" class="form-control" name="colaboradores" value="" placeholder="Buscar estudiantes...">
+                    <input type="text" class="form-control" name="colaboradores" value="<?php echo htmlspecialchars($project_details['colaboradores']); ?>" placeholder="Buscar estudiantes...">
                 </div>
 
-                <!-- Campo para archivo -->
                 <div class="form-group">
                     <label>Subir Archivo (opcional)</label>
                     <div class="file-input-wrapper">
                         <input type="file" name="archivo" class="file-input" id="archivo" />
                         <label for="archivo" class="file-input-label">Seleccionar archivo</label>
                     </div>
-                    <!-- Información sobre el archivo seleccionado, mostrada solo si se ha subido un archivo -->
                     <div class="file-info">
-                        <!-- El nombre del archivo seleccionado será mostrado por el navegador automáticamente una vez se haya cargado -->
+                        <!-- Aquí se mostrará el nombre del archivo si se selecciona -->
                     </div>
                 </div>
 

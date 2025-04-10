@@ -8,7 +8,7 @@ class Project {
 
     public function save($titulo, $descripcion, $etapa, $colaboradores) {
         $query = "INSERT INTO tesis (titulo, Descripcion, etapa, colaboradores, estado_id) 
-                  VALUES (:titulo, :descripcion, :etapa, :colaboradores, 1)"; // Estado '1' sería Propuesta
+                  VALUES (:titulo, :descripcion, :etapa, :colaboradores, 1)"; 
 
         $stmt = $this->db->getConnection()->prepare($query);
         $stmt->bindParam(':titulo', $titulo);
@@ -19,12 +19,11 @@ class Project {
         return $stmt->execute();
     }
 
-    // Métodos para obtener, actualizar, y eliminar proyectos
     public function getAll() {
-        $query = "SELECT * FROM tesis"; // Asegúrate de que la tabla 'tesis' existe
+        $query = "SELECT * FROM tesis"; 
         $stmt = $this->db->getConnection()->prepare($query);
         $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);  // Devuelve todos los proyectos como un array asociativo
+        return $stmt->fetchAll(PDO::FETCH_ASSOC); 
     }
     
 

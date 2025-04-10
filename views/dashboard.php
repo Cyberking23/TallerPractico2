@@ -160,7 +160,7 @@ $projects = $project->getAll();
                     </span>
 
                     <div>
-                        <a href="./projects/details.php?id=<?php echo $project['id']; ?>" class="btn-uber" style="margin-right: 10px;"><i class="fas fa-edit"></i> Editar</a>
+                        <a href="./details.php?id=<?php echo $project['id']; ?>" class="btn-uber" style="margin-right: 10px;"><i class="fas fa-edit"></i> Editar</a>
                         <a href="./projects/delete.php?id=<?php echo $project['id']; ?>" class="btn-uber"><i class="fas fa-trash"></i> Eliminar</a>
                     </div>
                 </div>
