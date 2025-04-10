@@ -162,7 +162,7 @@ $project_details = $project->getById($project_id); // Método que obtiene los de
 
                 <div class="form-group">
                     <label>Descripción</label>
-                    <textarea class="form-control" name="descripcion" required><?php echo htmlspecialchars($project_details['Descripcion']); ?></textarea>
+                    <textarea class="form-control" name="descripcion" required><?php echo htmlspecialchars($project_details['descripcion']); ?></textarea>
                 </div>
 
                 <div class="form-group">
