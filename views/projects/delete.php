@@ -1,26 +1,24 @@
 <?php
-include '../../config/Conexion.php';
+require_once '../../config/Conexion.php';
 require_once '../../models/Project.php';
 
 if (isset($_GET['id'])) {
-    $id = $_GET['id'];
+    $id = intval($_GET['id']); // Asegurarse de que el ID sea un número entero
 
-    // Crear una instancia de conexión y de la clase Project
-    $conexion = new Conexion();
-    $project = new Project($conexion);
+    // Llamar al método estático delete() de la clase Project para eliminar el proyecto
+    $result = Project::delete($id);
 
-    // Llamar al método delete() de la clase Project para eliminar el proyecto
-    $result = $project->delete($id);
-
-    if ($result) {
-        echo "Proyecto eliminado con éxito. Redirigiendo...";
-
-        // Redirigir al dashboard después de 3 segundos
-        header("refresh:3;url=/views/dashboard.php");
+    if (isset($result['success'])) {
+        // Redirigir al dashboard si la eliminación es exitosa
+        header("Location: ../dashboard.php");
+        exit();
     } else {
-        echo "Hubo un error al eliminar el proyecto.";
+        // Mostrar el mensaje de error si ocurre un problema
+        echo $result['error'];
+        exit();
     }
 } else {
     echo "ID de proyecto no especificado.";
+    exit();
 }
 ?>

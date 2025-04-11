@@ -1,89 +1,65 @@
--- Crear la base de datos
-CREATE DATABASE IF NOT EXISTS sistema_tesis;
-USE sistema_tesis;
+create database desafio_dss2;
 
--- Tabla de roles de usuario
-CREATE TABLE roles (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  nombre VARCHAR(50) NOT NULL
+use desafio_dss2;
+
+CREATE TABLE `escuelas` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
 );
 
--- Insertar roles predeterminados
-INSERT INTO roles (nombre) VALUES 
-('Estudiante'),
-('Docente');
+INSERT INTO `escuelas` VALUES (1,'Facultad de Ingeniería'),(2,'Facultad de Ciencias'),(3,'Facultad de Humanidades'),(4,'Facultad de Medicina'),(5,'Facultad de Derecho'),(6,'Facultad de Arquitectura'),(7,'Facultad de Economía'),(8,'Facultad de Artes'),(9,'Facultad de Educación'),(10,'Facultad de Psicología');
 
--- Tabla de usuarios
-CREATE TABLE usuarios (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  nombre VARCHAR(100) NOT NULL,
-  email VARCHAR(100) UNIQUE NOT NULL,
-  password VARCHAR(255) NOT NULL,
-  rol_id INT NOT NULL,
-  FOREIGN KEY (rol_id) REFERENCES roles(id)
+
+CREATE TABLE `users` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `rol` varchar(45) NOT NULL DEFAULT 'estudiante',
+  `id_escuela` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `email` (`email`),
+  KEY `id_escuela` (`id_escuela`),
+  CONSTRAINT `users_ibfk_1` FOREIGN KEY (`id_escuela`) REFERENCES `escuelas` (`id`) ON DELETE SET NULL
 );
 
-SELECT * FROM tesis;
+INSERT INTO `users` VALUES (8,'admin','admin@demo.com','$2y$10$yJVlteFbepryhrKrWXalf.Tp/HwOvtIxrzUyIe5LcNicaJh3PjXmG','decano',NULL);
 
--- Tabla de estados de tesis
-CREATE TABLE estados (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  nombre_estado VARCHAR(100) NOT NULL
-);
-
--- Insertar estados predeterminados
-INSERT INTO estados (nombre_estado) VALUES
-('Propuesta'),
-('Revisión'),
-('Corrección de observaciones'),
-('Aprobada'),
-('Presentación final');
-
--- Tabla de tesis
-CREATE TABLE tesis (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  titulo VARCHAR(200) NOT NULL,
-  Descripcion TEXT NOT NULL,
-  etapa INT NOT NULL,
-  colaboradores VARCHAR(200) NULL,
-  fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  estado_id INT,
-  FOREIGN KEY (estado_id) REFERENCES estados(id)
-);
-
--- Ahora, después de crear la tabla tesis, crea la tabla tesis_usuarios
-CREATE TABLE tesis_usuarios (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  tesis_id INT,
-  usuario_id INT,
-  tipo_participacion ENUM('Autor', 'Director') NOT NULL,
-  FOREIGN KEY (tesis_id) REFERENCES tesis(id) ON DELETE CASCADE,
-  FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE
-);
-
--- Tabla para registrar el historial de avance por tesis
-CREATE TABLE historial_avance (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  tesis_id INT,
-  estado_id INT,
-  fecha_cambio DATETIME DEFAULT CURRENT_TIMESTAMP,
-  observaciones TEXT,
-  FOREIGN KEY (tesis_id) REFERENCES tesis(id),
-  FOREIGN KEY (estado_id) REFERENCES estados(id)
-);
-
-CREATE TABLE archivos (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  tesis_id INT,
-  nombre_archivo VARCHAR(255),
-  tipo_archivo VARCHAR(50),
-  ruta_archivo VARCHAR(255),
-  fecha_subida TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (tesis_id) REFERENCES tesis(id) ON DELETE CASCADE
+CREATE TABLE `projects` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `titulo` varchar(255) NOT NULL,
+  `descripcion` text,
+  `id_user_owner` int(11) NOT NULL,
+  `etapa` varchar(45) DEFAULT 'Propuesta de tema',
+  PRIMARY KEY (`id`),
+  KEY `FK_USERSOWNERPROJECT` (`id_user_owner`),
+  CONSTRAINT `FK_USERSOWNERPROJECT` FOREIGN KEY (`id_user_owner`) REFERENCES `users` (`id`)
 );
 
 
 
+CREATE TABLE `files` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nombre_archivo` varchar(255) NOT NULL,
+  `id_project` int(11) NOT NULL,
+  `tipo_archivo` varchar(50) NOT NULL,
+  `ruta` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK_FILEPROJECT` (`id_project`),
+  CONSTRAINT `FK_FILEPROJECT` FOREIGN KEY (`id_project`) REFERENCES `projects` (`id`)
+);
 
+
+CREATE TABLE `project_users` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_user` int(11) DEFAULT NULL,
+  `id_project` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK_USERPROJECT` (`id_user`),
+  KEY `FK_PROJECTUSER` (`id_project`),
+  CONSTRAINT `FK_PROJECTUSER` FOREIGN KEY (`id_project`) REFERENCES `projects` (`id`),
+  CONSTRAINT `FK_USERPROJECT` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`)
+);
 
 

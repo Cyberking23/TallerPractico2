@@ -5,32 +5,31 @@ class Users {
     public $nombre;
     public $email;
     public $password;
-    public $rol_id; // Nuevo atributo para el rol
-    public $db; 
+    public $rol; // Nuevo atributo para el rol
+    public $id_escuela; // Relación opcional con escuela
 
-    public function __construct($db, $id = null, $nombre = null, $email = null, $password = null, $rol_id = null) {
-        $this->db = $db->getConnection();  // Obtener la conexión desde el método getConnection()
-        $this->id = $id;
-        $this->nombre = $nombre;
-        $this->email = $email;
-        $this->password = $password;
-        $this->rol_id = $rol_id;
+    // Constructor que acepta un array asociativo
+    public function __construct($data = []) {
+        $this->id = $data['id'] ?? null;
+        $this->nombre = $data['nombre'] ?? null;
+        $this->email = $data['email'] ?? null;
+        $this->password = $data['password'] ?? null;
+        $this->rol = $data['rol'] ?? null;
+        $this->id_escuela = $data['id_escuela'] ?? null;
     }
 
     public function Login() {
         try {
-            $query = "SELECT * FROM usuarios WHERE email = :email";
-            $stmt = $this->db->prepare($query);
-            $stmt->bindParam(':email', $this->email);
-            $stmt->execute();
-            $user = $stmt->fetch(PDO::FETCH_ASSOC);
+            $query = "SELECT * FROM users WHERE email = '{$this->email}'";
+            $result = Conexion::query($query); // Retorna un array asociativo directamente
             
-            // Verificar si el usuario existe y comparar contraseñas en texto plano
-            if ($user && $this->password === $user['password']) {
+            // Verificar si el usuario existe y comparar contraseñas
+            if ($result && password_verify($this->password, $result['password'])) {
                 session_start();
-                $_SESSION['user_id'] = $user['id'];
-                $_SESSION['user_name'] = $user['nombre'];
-                $_SESSION['user_role'] = $user['rol_id']; // Guardamos el rol en sesión
+                $_SESSION['user_id'] = $result['id'];
+                $_SESSION['user_name'] = $result['nombre'];
+                $_SESSION['user_role'] = $result['rol']; // Guardamos el rol en sesión
+                $_SESSION['user_escuela'] = $result['id_escuela']; // Guardamos la escuela en sesión
                 return true; // Login exitoso
             } else {
                 return false; // Credenciales incorrectas
@@ -39,16 +38,12 @@ class Users {
             die("Error de conexión: " . $e->getMessage());
         }
     }
-    
-    
-    
+
     public function getUserInfo() {
         try {
-            $query = "SELECT id, nombre, email, rol_id FROM usuarios WHERE id = :id";
-            $stmt = $this->db->prepare($query);
-            $stmt->bindParam(':id', $this->id);
-            $stmt->execute();
-            return $stmt->fetch(PDO::FETCH_ASSOC);
+            $query = "SELECT id, nombre, email, rol, id_escuela FROM users WHERE id = '{$this->id}'";
+            $result = Conexion::query($query); // Retorna un array asociativo directamente
+            return $result ?? null; // Retorna el resultado o null si no hay datos
         } catch (PDOException $e) {
             die("Error de conexión: " . $e->getMessage());
         }
@@ -56,13 +51,14 @@ class Users {
 
     public function updateUser() {
         try {
-            $query = "UPDATE usuarios SET nombre = :nombre, email = :email, password = :password WHERE id = :id";
-            $stmt = $this->db->prepare($query);
-            $stmt->bindParam(':nombre', $this->nombre);
-            $stmt->bindParam(':email', $this->email);
-            $stmt->bindParam(':password', password_hash($this->password, PASSWORD_DEFAULT)); // Hashed password
-            $stmt->bindParam(':id', $this->id);
-            return $stmt->execute(); // Devuelve true si la actualización es exitosa
+            $query = "UPDATE users SET 
+                        nombre = '{$this->nombre}', 
+                        email = '{$this->email}', 
+                        password = '{$this->password}', 
+                        id_escuela = '{$this->id_escuela}' 
+                      WHERE id = '{$this->id}'";
+            Conexion::query($query);
+            return true; // Devuelve true si la actualización es exitosa
         } catch (PDOException $e) {
             die("Error de conexión: " . $e->getMessage());
         }
@@ -70,10 +66,9 @@ class Users {
 
     public function deleteUser() {
         try {
-            $query = "DELETE FROM usuarios WHERE id = :id";
-            $stmt = $this->db->prepare($query);
-            $stmt->bindParam(':id', $this->id);
-            return $stmt->execute(); 
+            $query = "DELETE FROM users WHERE id = '{$this->id}'";
+            Conexion::query($query);
+            return true; // Devuelve true si la eliminación es exitosa
         } catch (PDOException $e) {
             die("Error de conexión: " . $e->getMessage());
         }
@@ -81,36 +76,26 @@ class Users {
 
     public function register() {
         try {
-            $query = "SELECT * FROM usuarios WHERE email = :email";
-            $stmt = $this->db->prepare($query);
-            $stmt->bindParam(':email', $this->email);
-            $stmt->execute();
-            $user = $stmt->fetch(PDO::FETCH_ASSOC);
-    
+            $query = "SELECT * FROM users WHERE email = '{$this->email}'";
+            $result = Conexion::query($query); // Retorna un array asociativo directamente
+
             // Si ya existe, retornar un error
-            if ($user) {
-                return "El correo electrónico ya está registrado.";
+            if ($result) {
+                return ["error" => "El correo electrónico ya está registrado."];
             }
-    
+
             // Si no existe, insertar el nuevo usuario
-            $query = "INSERT INTO usuarios (nombre, email, password, rol_id) VALUES (:nombre, :email, :password, :rol_id)";
-            $stmt = $this->db->prepare($query);
-            $stmt->bindParam(':nombre', $this->nombre);
-            $stmt->bindParam(':email', $this->email);
-            $stmt->bindParam(':password', $this->password); // Guardamos la contraseña en texto plano
-            $stmt->bindParam(':rol_id', $this->rol_id); // Asignar el rol al usuario
-    
-            // Ejecutar la consulta
-            if ($stmt->execute()) {
-                return "Usuario registrado con éxito.";
-            } else {
-                return "Error al registrar el usuario.";
-            }
+            $query = "INSERT INTO users (nombre, email, password, id_escuela) 
+                      VALUES ('{$this->nombre}', '{$this->email}', '{$this->password}', '{$this->id_escuela}')";
+           
+            var_dump($query);
+           Conexion::query($query);
+
+            return ["success" => "Usuario registrado exitosamente."];
         } catch (PDOException $e) {
             die("Error de conexión: " . $e->getMessage());
         }
     }
-    
 }
 
 ?>

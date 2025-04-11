@@ -1,0 +1,178 @@
+/* General styles */
+body.create {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #ffffff; /* Fondo blanco */
+    color: #001f3f; /* Azul marino */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.create__container {
+    background-color: #ffffff; /* Fondo blanco */
+    border: 1px solid #001f3f; /* Azul marino */
+    border-radius: 8px;
+    padding: 30px;
+    width: 100%;
+    max-width: 500px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.create__title {
+    font-size: 26px;
+    color: #001f3f;
+    margin-bottom: 25px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.create__form {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.create__form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.create__label {
+    font-size: 16px;
+    color: #001f3f;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.create__input,
+.create__textarea {
+    width: 100%;
+    padding: 14px;
+    border: 1px solid #001f3f; /* Azul marino */
+    border-radius: 6px;
+    font-size: 16px;
+    color: #001f3f;
+    background-color: #ffffff;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.create__input:focus,
+.create__textarea:focus {
+    border-color: #003366; /* Azul más claro */
+    box-shadow: 0 0 5px rgba(0, 51, 102, 0.5);
+    outline: none;
+}
+
+.create__textarea {
+    min-height: 120px;
+    resize: none;
+}
+
+.create__actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+}
+
+.create__button {
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 12px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.create__button--primary {
+    background-color: #001f3f; /* Azul marino */
+    color: #ffffff;
+    border: none;
+}
+
+.create__button--primary:hover {
+    background-color: #003366; /* Azul más claro */
+    transform: translateY(-2px);
+}
+
+.create__button--secondary {
+    background-color: #ffffff;
+    color: #001f3f;
+    border: 1px solid #001f3f;
+}
+
+.create__button--secondary:hover {
+    background-color: #f2f2f2;
+    transform: translateY(-2px);
+}
+
+/* General styles */
+body.dashboard {
+    display: flex;
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #ffffff; /* Fondo blanco */
+    color: #001f3f; /* Azul marino */
+}
+
+.dashboard__sidebar {
+    width: 250px;
+    background-color: #001f3f; /* Azul marino */
+    color: #ffffff;
+    padding: 20px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.dashboard__menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.dashboard__menu-item {
+    margin-bottom: 15px;
+}
+
+.dashboard__menu-link {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+}
+
+.dashboard__menu-link i {
+    margin-right: 10px;
+}
+
+.dashboard__user-info {
+    margin-top: auto;
+    padding-top: 20px;
+    border-top: 1px solid #ffffff;
+    color: #ffffff;
+    font-size: 14px;
+}
+
+.dashboard__logout-button {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 10px 15px;
+    background-color: #ffffff;
+    color: #001f3f;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.dashboard__logout-button:hover {
+    background-color: #f2f2f2;
+    color: #001f3f;
+}

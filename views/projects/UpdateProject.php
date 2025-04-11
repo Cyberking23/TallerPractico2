@@ -1,36 +1,49 @@
 <?php
 
-include '../../config/Conexion.php';  
-require_once '../../models/Project.php'; 
+require_once '../../config/Conexion.php';
+require_once '../../models/Project.php';
 
-// Obtener el ID del proyecto desde la URL, verificando si está presente
+// Verificar si el ID del proyecto está presente en la URL
 if (!isset($_GET['id']) || empty($_GET['id'])) {
     echo "ID del proyecto no proporcionado.";
     exit;
 }
 
-$project_id = $_GET['id']; 
-
-// Crear la instancia de la clase Conexion
-$conexion = new Conexion();
-$project = new Project($conexion);
+$project_id = intval($_GET['id']); // Asegurarse de que el ID sea un número entero
 
 // Comprobar si el formulario ha sido enviado
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Obtener los datos del formulario, asegurándonos de eliminar espacios innecesarios
-    $titulo = trim($_POST['titulo']);
-    $descripcion = trim($_POST['descripcion']);
-    $etapa = trim($_POST['etapa']);
-    $colaboradores = trim($_POST['colaboradores']);
-
-    // Llamar al método update() con los 4 parámetros necesarios (sin el archivo)
-    if ($project->update($project_id, $titulo, $descripcion, $etapa, $colaboradores)) {
-        // Redirigir al dashboard o mostrar mensaje de éxito
-        echo "Proyecto actualizado correctamente. Redirigiendo...";
-        header("refresh:3;url=../dashboard.php");
+    // Obtener los datos actuales del proyecto
+    $current_project = Project::getById($project_id);
+    if (!$current_project) {
+        echo "El proyecto no existe.";
         exit;
+    }
+
+    // Obtener los datos del formulario, asegurándonos de eliminar espacios innecesarios
+    $titulo = trim($_POST['titulo'] ?? '') ?: $current_project['titulo'];
+    $descripcion = trim($_POST['descripcion'] ?? '') ?: $current_project['descripcion'];
+    $etapa = trim($_POST['etapa'] ?? '') ?: $current_project['etapa'];
+
+    // Crear una instancia del proyecto con los datos actualizados
+    $project = new Project([
+        'id' => $project_id,
+        'titulo' => $titulo,
+        'descripcion' => $descripcion,
+        'etapa' => $etapa
+    ]);
+
+    // Llamar al método update() para actualizar el proyecto
+    $result = $project->update();
+
+    if (isset($result['success'])) {
+        // Redirigir al dashboard si la actualización es exitosa
+        header("Location: ../dashboard.php");
+        exit();
     } else {
-        echo "Hubo un error al actualizar el proyecto.";
+        // Mostrar el mensaje de error si ocurre un problema
+        echo $result['error'];
+        exit();
     }
 }
 ?>
